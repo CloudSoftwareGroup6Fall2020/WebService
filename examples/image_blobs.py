@@ -45,7 +45,7 @@ try:
                 cursor.execute(query)
                 row = cursor.fetchone()
                 id = int(row[0]) + 1
-                query = f"INSERT INTO Images (id, name, img_type, upload_date, path) VALUES ('{id}', '{name}', '{img_type}', '{datetime.datetime.now()}', '{path}')"
+                query = f"INSERT INTO Images (id, name, img_type, upload_date, path) VALUES ('{id}', '{name}', '{img_type}', '{str(datetime.datetime.now())[0: 22]}', '{path}')"
                 cursor.execute(query)
 
         print("\nListing blobs...")
