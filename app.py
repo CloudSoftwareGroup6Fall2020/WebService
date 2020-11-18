@@ -1,12 +1,12 @@
 from flask import Flask
 from flask.wrappers import Response
-import pyodbc, random
+import pyodbc, random, os
 
 try:
     server = 'group6project.database.windows.net'
     database = 'cloudprojectdb'
-    username = '*INSERT USERNAME HERE*'
-    password = '*INSERT PASSWORD HERE*'
+    username = os.environ.get('sql_username')
+    password = os.environ.get('sql_password')
     driver= '{ODBC Driver 17 for SQL Server}'
 
 except Exception as ex:
