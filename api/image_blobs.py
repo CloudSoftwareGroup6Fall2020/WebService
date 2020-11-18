@@ -5,8 +5,8 @@ import pyodbc
 try:
     server = 'group6project.database.windows.net'
     database = 'cloudprojectdb'
-    username = '*INSERT USERNAME HERE*'
-    password = '*INSERT PASSWORD HERE*'
+    username = os.environ.get('sql_username')
+    password = os.environ.get('sql_password')
     driver= '{ODBC Driver 17 for SQL Server}'
 
     connection_string_blob = 'DefaultEndpointsProtocol=https;AccountName=cs71003bffda805345c;AccountKey=KdCm90f50B+/59bmb7F8A97ATIxbfMhHlz41BN4jpTR9bQKT5Bjp9yfPeZKYXDG613JQPoQHoe1lesbFjoADCA==;EndpointSuffix=core.windows.net'
