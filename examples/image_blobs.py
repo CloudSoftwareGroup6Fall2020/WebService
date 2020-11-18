@@ -1,4 +1,4 @@
-import os, uuid
+import os, uuid, datetime
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import pyodbc
 
@@ -35,7 +35,9 @@ try:
         with open(upload_file_path, "rb") as data:
             blob_client.upload_blob(data)
 
-        name = file
+        temp = file.split('.')
+        name = temp[0]
+        img_type = temp[1]
         path = 'https://cs71003bffda805345c.blob.core.windows.net/' + container_name + '/' + file
         with pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
             with conn.cursor() as cursor:
@@ -43,7 +45,7 @@ try:
                 cursor.execute(query)
                 row = cursor.fetchone()
                 id = int(row[0]) + 1
-                query = f"INSERT INTO Images (id, name, path) VALUES ('{id}', '{name}', '{path}')"
+                query = f"INSERT INTO Images (id, name, img_type, upload_date, path) VALUES ('{id}', '{name}', '{img_type}', '{datetime.datetime.now()}', '{path}')"
                 cursor.execute(query)
 
         print("\nListing blobs...")
