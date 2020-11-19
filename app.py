@@ -20,24 +20,26 @@ def index():
     response = requests.get(f"{api_url}/{uri_images}/{i}")
     img_src = response.json()[0]['path']
     return """<!DOCTYPE html>
-            <html>
-                <head>
-                    <title>indexPage</title>
-                        <link href = "static/format.css" type="text/css" rel="stylesheet">       
-                </head>
-                
-                <body>
-                    <div class='container'>
-                        <div class='button'>
-                            <button style='background-color:blanchedalmond;' onclick="location.href='/';">Random</button>
-                            <button onclick="location.href='/search';">Search</button>
-                            <button onclick="location.href='/browse';">Browse</button>
-                            <button onclick="location.href='/upload';">Upload</button>
+                <html>
+                    <head>
+                        <title>indexPage</title>
+                            <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
+                            <link href = "static/format.css" type="text/css" rel="stylesheet">
+                    </head>
+                    
+                    <body>
+                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        <div class='container'>
+                            <div class='button'>
+                                <button style='background-color:blanchedalmond;' onclick="location.href='/';">Random</button>
+                                <button onclick="location.href='/search';">Search</button>
+                                <button onclick="location.href='/browse';">Browse</button>
+                                <button onclick="location.href='/upload';">Upload</button>
+                            </div>
                         </div>
-                    </div>
-                    <img src='""" + img_src + """'>
-                </body>
-            </html>"""
+                        <img src='""" + img_src + """'>
+                    </body>
+                </html>"""
 
 @app.route("/search")
 def search():
@@ -45,6 +47,7 @@ def search():
                 <html>
                     <head>
                         <title>searchPage</title>
+                            <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
                             <link href = "static/format.css" type="text/css" rel="stylesheet">       
                             <style>
                                 submit{
@@ -62,6 +65,7 @@ def search():
                         </head>
                     
                     <body>
+                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
                         <div class='container'>
                             <div class='button'>
                                 <button onclick="location.href='/';">Random</button>
@@ -87,14 +91,35 @@ def search():
 
 @app.route("/browse")
 def browse():
+    response = requests.get(f"{api_url}/images/count")
+    img_count = response.json()[0]['count']
+    response = requests.get(f"{api_url}/images")
+    col_count = 3
+    i = 1
+    data = ''
+    for row in range(1, img_count):
+        data += '<tr>'
+        for col in range(col_count):
+            if (i == img_count):
+                break
+            img_src = response.json()[i]['path']
+            data += '<td>'
+            data += f"<img src=\'{img_src}\'>"
+            data += '</td>'
+            i += 1
+        data += '</tr>'
+
+
     return """<!DOCTYPE html>
                 <html>
                     <head>
                         <title>browsePage</title>
-                            <link href = "static/format.css" type="text/css" rel="stylesheet">       
+                        <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
+                            <link href = "static/format.css" type="text/css" rel="stylesheet">   
                     </head>
                     
                     <body>
+                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
                         <div class='container'>
                             <div class='button'>
                                 <button onclick="location.href='/';">Random</button>
@@ -104,15 +129,7 @@ def browse():
                             </div>
                         </div>
                         <div class='container'>
-                            <table>
-                                <tr>
-                                    <td>1</td>
-                                    <td>2</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>4</td>
-                                </tr>
+                            <table>"""+ data +"""
                             </table>
                         </div>
                     </body>
@@ -124,10 +141,12 @@ def upload():
                 <html>
                     <head>
                         <title>indexPage</title>
-                            <link href = "static/format.css" type="text/css" rel="stylesheet">       
+                        <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
+                            <link href = "static/format.css" type="text/css" rel="stylesheet">
                     </head>
                     
                     <body>
+                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
                         <div class='container'>
                             <div class='button'>
                                 <button onclick="location.href='/';">Random</button>
