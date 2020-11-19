@@ -4,20 +4,21 @@ import random, requests
 app = Flask(__name__, static_folder='static')
 
 api_url = 'https://cloudsoftwareprojectgroup6api.azurewebsites.net'
-uri_images = '/images'
+uri_images = 'images'
 
 previous = 0
 @app.route("/")
 def index():
+    response = requests.get(f"{api_url}/{uri_images}/count")
+    img_count = response.json()[0]['count']
     global previous
     i = previous
     while i == previous:
-        i = random.randint(1, 199) #***change once api can respond with number of images in the database
+        i = random.randint(1, img_count-1)
     previous = i
 
     response = requests.get(f"{api_url}/{uri_images}/{i}")
     img_src = response.json()[0]['path']
-    
     return """<!DOCTYPE html>
             <html>
                 <head>

@@ -14,7 +14,7 @@ try:
     blob_service_client = BlobServiceClient.from_connection_string(connection_string_blob)
 
     # Create a unique name for the container
-    container_name = "imageblob" + str(uuid.uuid4())
+    container_name = "blobcontainer" + str(uuid.uuid4())
 
     # Create the container
     container_client = blob_service_client.create_container(container_name, public_access='blob')
@@ -22,6 +22,7 @@ try:
     image_path = './data/images'
     file_names = os.listdir(image_path)
 
+    print("\nBeginning File Upload...")
     for file in file_names:
         local_file_name = file
         upload_file_path = os.path.join(image_path, local_file_name)
@@ -29,7 +30,7 @@ try:
         # Create a blob client using the local file name as the name for the blob
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=local_file_name)
 
-        print("\nUploading to Azure Storage as blob:\n\t" + local_file_name)
+        print("\nUploading..." + local_file_name)
 
         # Upload the created file
         with open(upload_file_path, "rb") as data:
@@ -47,13 +48,14 @@ try:
                 id = int(row[0]) + 1
                 query = f"INSERT INTO Images (id, name, img_type, upload_date, path) VALUES ('{id}', '{name}', '{img_type}', '{str(datetime.datetime.now())[0: 22]}', '{path}')"
                 cursor.execute(query)
+    print("\nListing blobs...")
 
-        print("\nListing blobs...")
-
-        # List the blobs in the container
-        blob_list = container_client.list_blobs()
-        for blob in blob_list:
-            print("\t" + blob.name)
+    # List the blobs in the container
+    blob_list = container_client.list_blobs()
+    for blob in blob_list:
+        print("\t" + blob.name)
+    print('Done...Images uploaded successfully.')
 except Exception as ex:
     print('Exception:')
     print(ex)
+
