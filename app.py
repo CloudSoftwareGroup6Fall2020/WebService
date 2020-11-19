@@ -1,44 +1,10 @@
 from flask import Flask
-from flask.wrappers import Response
-import pyodbc, random, os
-
-try:
-    server = 'group6project.database.windows.net'
-    database = 'cloudprojectdb'
-    username = os.environ.get('sql_username')
-    password = os.environ.get('sql_password')
-    driver= '{ODBC Driver 17 for SQL Server}'
-
-except Exception as ex:
-    print('Exception:')
-    print(ex)
-
-connection_string_blob = 'DefaultEndpointsProtocol=https;AccountName=cs71003bffda805345c;AccountKey=KdCm90f50B+/59bmb7F8A97ATIxbfMhHlz41BN4jpTR9bQKT5Bjp9yfPeZKYXDG613JQPoQHoe1lesbFjoADCA==;EndpointSuffix=core.windows.net'
-
-response = ""
-with pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
-    with conn.cursor() as cursor:
-        query = f"SELECT * from Images"
-        cursor.execute(query)
-        row = cursor.fetchall()
-        i = 0
-        for var in row:
-            if (i == 0):
-                i += 1
-                continue
-            j = 0
-            for var in row[i]:
-                if (j == 3):
-                    temp = str(row[i][j]).split()
-                    row[i][j] = temp[0] + ' ' + temp[1]
-                else:
-                    temp = str(row[i][j]).split()
-                    row[i][j] = temp[0]
-                j += 1
-            i += 1
-        response = row
+import random, requests
 
 app = Flask(__name__, static_folder='static')
+
+api_url = 'https://cloudsoftwareprojectgroup6api.azurewebsites.net'
+uri_images = '/images'
 
 previous = 0
 @app.route("/")
@@ -46,10 +12,12 @@ def index():
     global previous
     i = previous
     while i == previous:
-        i = random.randint(1, len(response) - 1)
+        i = random.randint(1, 199) #***change once api can respond with number of images in the database
     previous = i
 
-    image_url_index = 4
+    response = requests.get(f"{api_url}/{uri_images}/{i}")
+    img_src = response.json()[0]['path']
+    
     return """<!DOCTYPE html>
             <html>
                 <head>
@@ -66,7 +34,7 @@ def index():
                             <button onclick="location.href='/upload';">Upload</button>
                         </div>
                     </div>
-                    <img src='"""+ response[i][image_url_index] +"""'>
+                    <img src='""" + img_src + """'>
                 </body>
             </html>"""
 
