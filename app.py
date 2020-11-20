@@ -97,7 +97,12 @@ def browse():
     col_count = 3
     i = 1
     data = ''
-    for row in range(1, img_count):
+    numRows = 0
+    if (img_count % col_count == 0):
+        numRows = int(img_count / col_count) + 1
+    else:
+        numRows = int(img_count / col_count) + 2
+    for row in range(1, numRows):
         data += '<tr>'
         for col in range(col_count):
             if (i == img_count):
