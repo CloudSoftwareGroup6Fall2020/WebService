@@ -1,5 +1,8 @@
 from flask import Flask
+from flask import request, redirect
 import random, requests
+from flask import json
+from flask.helpers import url_for
 
 app = Flask(__name__, static_folder='static')
 
@@ -75,9 +78,9 @@ def search():
                                 <br />
                                 <br />
                                 <br />
-                                <form method='POST' action=''>
-                                    <input type='text' placeholder='Search by ID'></input>
-                                    <button class='submit' name='id' type='submit'>Submit</button>
+                                <form method='POST' action='"""+url_for('GetImageByID')+"""'>
+                                    <input type='text' placeholder='Search by ID' name='id'></input>
+                                    <button class='submit' type='submit'>Submit</button>
                                     <br />
                                     <br />
                                     <br />
@@ -167,6 +170,37 @@ def upload():
                                 </form>
                             </div>
                         </div>
+                    </body>
+                </html>"""
+
+@app.route('/GetImageByID', methods=['POST'])
+def GetImageByID():
+    id = int(request.form['id'])
+    response = requests.get(f"{api_url}/{uri_images}/count")
+    img_count = int(response.json()[0]['count'])
+    if (id < 1 or id > img_count):
+        return redirect(url_for('search'), code=302)
+    response = requests.get(f"{api_url}/{uri_images}/{id}")
+    img_src = response.json()[0]['path']
+    return """<!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>indexPage</title>
+                            <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
+                            <link href = "static/format.css" type="text/css" rel="stylesheet">
+                    </head>
+                    
+                    <body>
+                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        <div class='container'>
+                            <div class='button'>
+                                <button style='background-color:blanchedalmond;' onclick="location.href='/';">Random</button>
+                                <button onclick="location.href='/search';">Search</button>
+                                <button onclick="location.href='/browse';">Browse</button>
+                                <button onclick="location.href='/upload';">Upload</button>
+                            </div>
+                        </div>
+                        <img src="""+ img_src +""">
                     </body>
                 </html>"""
 if __name__ == "__main__":
