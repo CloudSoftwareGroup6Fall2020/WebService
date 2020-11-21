@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request, redirect
-import random, requests
+import random, requests, os
 from flask import json
 from flask.helpers import url_for
 
@@ -166,14 +166,51 @@ def upload():
                                 <br />
                                 <br />
                                 <br />
-                                <form method='POST' action=''>
-                                    <input type='text' placeholder='Upload'></input>
+                                <form method='POST' action='"""+ url_for('UploadImage') +"""'>
+                                    <input type='file' placeholder='Upload' name='file' accept="image/*"></input>
                                     <button class='submit' name='upload' type='submit'>Submit</button>
                                 </form>
                             </div>
                         </div>
                     </body>
                 </html>"""
+
+@app.route("/uploadImage", methods=['POST'])
+def UploadImage():
+    file = request.files['file']
+    escape(os.path.abspath(file) + file)
+    response = requests.post(f"{api_url}/{uri_images}/upload/{newStr}")
+
+def escape(str1):
+    global newStr
+    for character in str1:
+        if (character == ':'):
+            split = str1.split(':')
+            newStr = split[0] + '&#58;' + split[1]
+            escape(newStr)
+            break
+        if (character == '/'):
+            split = str1.split('/')
+            index = 0
+            temp = ''
+            for slash in split:
+                if (index == len(split)):
+                    continue
+                if (index > 0):
+                    temp += '&#47;' + split[index]
+                    index += 1
+                else:
+                    temp += split[index] + '&#47;' + split[index + 1]
+                    index += 2
+            newStr = temp
+            escape(newStr)
+            break
+        if (character == '.'):
+            split = str1.split('.')
+            newStr = split[0] + '&#46;' + split[1]
+            return newStr
+        
+
 
 @app.route('/GetImageByID', methods=['POST'])
 def GetImageByID():
