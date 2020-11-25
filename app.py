@@ -179,12 +179,17 @@ def upload():
 def uploadImage():
     img = request.files['img']
     img.save(os.path.join('./', img.filename))
-    with open(img.filename, 'rb') as binary_file:
-        binary_file_data = binary_file.read()
-        base64_encoded_data = base64.b64encode(binary_file_data)
-        base64_message = base64_encoded_data.decode('utf-8')
-        requests.post(f"{api_url}/{uri_images}/upload/", json={"img_base64_message": base64_message })
-    #os.remove(img.filename)
+    img_size = os.path.getsize('./'+img.filename)
+    img_size_error = ''
+    if (img_size > 1000000):
+        img_size_error = 'File size cannot exceed 1mb'
+    else:
+        with open(img.filename, 'rb') as binary_file:
+            binary_file_data = binary_file.read()
+            base64_encoded_data = base64.b64encode(binary_file_data)
+            base64_message = base64_encoded_data.decode('utf-8')
+            requests.post(f"{api_url}/{uri_images}/upload/", json={"img_base64_message": base64_message })
+    os.remove(img.filename)
     return """<!DOCTYPE html>
             <html>
                 <head>
@@ -209,6 +214,7 @@ def uploadImage():
                                 <button class='submit' name='upload' type='submit'>Submit</button>
                             </form>
                         </div>
+                        """+ img_size_error +"""
                     </div>
                 </body>
             </html>"""
