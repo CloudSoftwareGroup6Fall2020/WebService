@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request, redirect
-import random, requests
+import random, requests, base64, os, urllib
 from flask import json
 from flask.helpers import url_for
 
@@ -145,7 +145,7 @@ def browse():
                     </body>
                 </html>"""
 
-@app.route("/upload")
+@app.route("/upload", methods=['GET', 'POST'])
 def upload():
     return """<!DOCTYPE html>
                 <html>
@@ -166,14 +166,52 @@ def upload():
                                 <br />
                                 <br />
                                 <br />
-                                <form method='POST' action=''>
-                                    <input type='text' placeholder='Upload'></input>
+                                <form method='POST' action='/upload_data' enctype="multipart/form-data">
+                                    <input type='file' placeholder='Upload' name='img'></input>
                                     <button class='submit' name='upload' type='submit'>Submit</button>
                                 </form>
                             </div>
                         </div>
                     </body>
                 </html>"""
+
+@app.route("/upload_data", methods=['GET', 'POST'])
+def uploadImage():
+    img = request.files['img']
+    img.save(os.path.join('./', img.filename))
+    with open(img.filename, 'rb') as binary_file:
+        binary_file_data = binary_file.read()
+        base64_encoded_data = base64.b64encode(binary_file_data)
+        base64_message = base64_encoded_data.decode('utf-8')
+        requests.post(f"{api_url}/{uri_images}/upload/", json={"img_base64_message": base64_message })
+    #os.remove(img.filename)
+    return """<!DOCTYPE html>
+            <html>
+                <head>
+                    <title>indexPage</title>
+                    <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
+                        <link href = "static/format.css" type="text/css" rel="stylesheet">
+                </head>
+                
+                <body>
+                    <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                    <div class='container'>
+                        <div class='button'>
+                            <button onclick="location.href='/';">Random</button>
+                            <button onclick="location.href='/search';">Search</button>
+                            <button onclick="location.href='/browse';">Browse</button>
+                            <button style='background-color:blanchedalmond;' onclick="location.href='/upload';">Upload</button>
+                            <br />
+                            <br />
+                            <br />
+                            <form method='POST' action='/upload_data' enctype="multipart/form-data">
+                                <input type='file' placeholder='Upload' name='img'></input>
+                                <button class='submit' name='upload' type='submit'>Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </body>
+            </html>"""
 
 @app.route('/GetImageByID', methods=['POST'])
 def GetImageByID():
