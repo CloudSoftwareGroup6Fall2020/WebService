@@ -108,13 +108,13 @@ def browse():
     else:
         numRows = int(img_count / col_count) + 2
     for row in range(1, numRows):
-        data += '<tr>'
+        data += '<tr height=\"612\">'
         for col in range(col_count):
             if (i == img_count):
                 break
             img_src = response.json()[i]['path']
             data += '<td>'
-            data += f"<img src=\'{img_src}\'>"
+            data += f"<img style=\"display:block;\" width=\"612\" height=\"612\" src=\'{img_src}\'>"
             data += '</td>'
             i += 1
         data += '</tr>'
@@ -139,7 +139,7 @@ def browse():
                             </div>
                         </div>
                         <div class='container'>
-                            <table>"""+ data +"""
+                            <table style=\"table-layout: fixed;margin-left: auto;margin-right: auto;\">"""+ data +"""
                             </table>
                         </div>
                     </body>
