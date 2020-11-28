@@ -1,12 +1,11 @@
 from flask import Flask
 from flask import request, redirect
-import random, requests, base64, os, urllib
-from flask import json
+import random, requests, base64, os
 from flask.helpers import url_for
 
 app = Flask(__name__, static_folder='static')
 
-api_url = 'https://cloudsoftwareprojectgroup6api.azurewebsites.net'
+api_url = 'https://cloudsoftwareprojectgroup6api.azurewebsites.net/api'
 uri_images = 'images'
 
 previous = 0
