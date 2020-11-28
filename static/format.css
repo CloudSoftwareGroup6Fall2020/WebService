@@ -22,3 +22,11 @@ input[type='text']{
         padding: 7px;
         box-sizing: border-box;
 }
+.aligncenter {
+        text-align: center;
+}
+.centerImage {
+        display:block;
+        width:612px;
+        height:612px;
+}

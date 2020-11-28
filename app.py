@@ -24,9 +24,10 @@ def index():
     return """<!DOCTYPE html>
                 <html>
                     <head>
-                        <title>indexPage</title>
+                        <title>Cat.</title>
                             <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
                             <link href = "static/format.css" type="text/css" rel="stylesheet">
+                            <link rel="icon" href="/static/favicon.png">
                     </head>
                     
                     <body>
@@ -39,7 +40,9 @@ def index():
                                 <button onclick="location.href='/upload';">Upload</button>
                             </div>
                         </div>
-                        <img src='""" + img_src + """'>
+                        <p class="aligncenter">
+                            <img width=\"612\" height=\"612\" src='""" + img_src + """'>
+                        </p>
                     </body>
                 </html>"""
 
@@ -48,9 +51,10 @@ def search():
     return """<!DOCTYPE html>
                 <html>
                     <head>
-                        <title>searchPage</title>
+                        <title>Cat Search</title>
                             <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
-                            <link href = "static/format.css" type="text/css" rel="stylesheet">       
+                            <link href = "static/format.css" type="text/css" rel="stylesheet">
+                            <link rel="icon" href="/static/favicon.png">   
                             <style>
                                 submit{
                                     width: 10%;
@@ -122,9 +126,10 @@ def browse():
     return """<!DOCTYPE html>
                 <html>
                     <head>
-                        <title>browsePage</title>
+                        <title>Cat Browse</title>
                         <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
-                            <link href = "static/format.css" type="text/css" rel="stylesheet">   
+                            <link href = "static/format.css" type="text/css" rel="stylesheet">
+                            <link rel="icon" href="/static/favicon.png">
                     </head>
                     
                     <body>
@@ -149,9 +154,10 @@ def upload():
     return """<!DOCTYPE html>
                 <html>
                     <head>
-                        <title>indexPage</title>
+                        <title>Cat Upload</title>
                         <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
                             <link href = "static/format.css" type="text/css" rel="stylesheet">
+                            <link rel="icon" href="/static/favicon.png">
                     </head>
                     
                     <body>
@@ -192,9 +198,10 @@ def uploadImage():
     return """<!DOCTYPE html>
             <html>
                 <head>
-                    <title>indexPage</title>
+                    <title>Cat Upload</title>
                     <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
                         <link href = "static/format.css" type="text/css" rel="stylesheet">
+                        <link rel="icon" href="/static/favicon.png">
                 </head>
                 
                 <body>
@@ -230,9 +237,10 @@ def GetImageByID():
     return """<!DOCTYPE html>
                 <html>
                     <head>
-                        <title>searchPage</title>
+                        <title>Cat Search</title>
                             <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
                             <link href = "static/format.css" type="text/css" rel="stylesheet">       
+                            <link rel="icon" href="/static/favicon.png">
                             <style>
                                 submit{
                                     width: 10%;
@@ -320,9 +328,10 @@ def GetImageByName():
     return """<!DOCTYPE html>
                 <html>
                     <head>
-                        <title>searchPage</title>
+                        <title>Cat Search</title>
                             <!--All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats -->
                             <link href = "static/format.css" type="text/css" rel="stylesheet">       
+                            <link rel="icon" href="/static/favicon.png">
                             <style>
                                 submit{
                                     width: 10%;
