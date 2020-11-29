@@ -31,7 +31,7 @@ def index():
                     </head>
                     
                     <body>
-                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        
                         <div class='container'>
                             <div class='button'>
                                 <button style='background-color:blanchedalmond;' onclick="location.href='/';">Random</button>
@@ -41,8 +41,11 @@ def index():
                             </div>
                         </div>
                         <p class="aligncenter">
-                            <img width=\"612\" height=\"612\" src='""" + img_src + """'>
+                            <img src='""" + img_src + """'>
                         </p>
+                         <footer>
+                            <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        </footer>
                     </body>
                 </html>"""
 
@@ -71,7 +74,6 @@ def search():
                         </head>
                     
                     <body>
-                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
                         <div class='container'>
                             <div class='button'>
                                 <button onclick="location.href='/';">Random</button>
@@ -94,6 +96,9 @@ def search():
                                 </form>
                             </div>
                         </div>
+                         <footer>
+                            <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        </footer>
                     </body>
                 </html>"""
 
@@ -133,7 +138,6 @@ def browse():
                     </head>
                     
                     <body>
-                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
                         <div class='container'>
                             <div class='button'>
                                 <button onclick="location.href='/';">Random</button>
@@ -146,6 +150,9 @@ def browse():
                             <table style=\"table-layout: fixed;margin-left: auto;margin-right: auto;\">"""+ data +"""
                             </table>
                         </div>
+                         <footer>
+                            <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        </footer>
                     </body>
                 </html>"""
 
@@ -161,7 +168,6 @@ def upload():
                     </head>
                     
                     <body>
-                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
                         <div class='container'>
                             <div class='button'>
                                 <button onclick="location.href='/';">Random</button>
@@ -177,6 +183,9 @@ def upload():
                                 </form>
                             </div>
                         </div>
+                         <footer>
+                            <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        </footer>
                     </body>
                 </html>"""
 
@@ -205,7 +214,6 @@ def uploadImage():
                 </head>
                 
                 <body>
-                    <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
                     <div class='container'>
                         <div class='button'>
                             <button onclick="location.href='/';">Random</button>
@@ -222,6 +230,9 @@ def uploadImage():
                         </div>
                         """+ img_size_error +"""
                     </div>
+                     <footer>
+                            <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        </footer>
                 </body>
             </html>"""
 
@@ -230,7 +241,7 @@ def GetImageByID():
     id = int(request.form['id'])
     response = requests.get(f"{api_url}/{uri_images}/count")
     img_count = int(response.json()[0]['count'])
-    if (id < 1 or id > img_count):
+    if (id < 1 or id > img_count ):
         return redirect(url_for('search'), code=302)
     response = requests.get(f"{api_url}/{uri_images}/{id}")
     img_src = response.json()[0]['path']
@@ -257,7 +268,6 @@ def GetImageByID():
                         </head>
                     
                     <body>
-                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
                         <div class='container'>
                             <div class='button'>
                                 <button onclick="location.href='/';">Random</button>
@@ -283,6 +293,9 @@ def GetImageByID():
                         <div class='container'>
                             <img src='"""+ img_src +"""'>
                         </div>
+                        <footer>
+                            <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        </footer>
                     </body>
                 </html>"""
 
@@ -348,7 +361,6 @@ def GetImageByName():
                         </head>
                     
                     <body>
-                        <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
                         <div class='container'>
                             <div class='button'>
                                 <button onclick="location.href='/';">Random</button>
@@ -375,6 +387,9 @@ def GetImageByName():
                             <table>"""+ data +"""
                             </table>
                         </div>
+                         <footer>
+                            <p>All cats photos used are BSD Licensed (EAST BAY WOOPWOOP) https://github.com/maxogden/cats</p>
+                        </footer>
                     </body>
                 </html>"""
 if __name__ == "__main__":

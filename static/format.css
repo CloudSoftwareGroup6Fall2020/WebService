@@ -4,15 +4,21 @@ body{
 }
 .container{
         text-align: center;
-        margin-top: 200px;
+        margin-top: 50px;
 
 }
 button{
         border: 1px solid black;
+        border-radius: 2px;
         background: none;
         font-family: Georgia, 'Times New Roman', Times, serif;
         padding: 10px 25px;
         font-size: 20px;
+        
+}
+button:hover{
+    background-color:forestgreen;
+    color: white;
 }
 input[type='text']{
         width: 30%;
@@ -27,6 +33,12 @@ input[type='text']{
 }
 .centerImage {
         display:block;
-        width:612px;
-        height:612px;
+        width:300px;
+     
+}
+img{
+    width:325px;
+}
+footer{
+    bottom:0;
 }
